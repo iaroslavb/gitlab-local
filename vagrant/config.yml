@@ -1,0 +1,8 @@
+---
+gitlab:
+  name:     "gitlab"
+  cpus:     4
+  memory:   2048
+  gui:      false
+  box:      "ubuntu/xenial64"
+  ip:       192.168.88.222
