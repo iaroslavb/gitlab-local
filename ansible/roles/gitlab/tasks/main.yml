@@ -1,1 +1,48 @@
 ---
+- name: Install gitlab prereqs
+  apt:
+    name:   "{{ item }}"
+    state:  latest
+  with_items:
+    - curl
+    - openssh-server
+    - ca-certificates
+
+- name: Configure postfix using debconf
+  debconf:
+    name: postfix
+    question: postfix/main_mailer_type
+    value: 'Internet Site'
+    vtype: select
+
+- name: Install postfix
+  apt:
+    name:   postfix
+    state:  latest
+
+- name: Download gitlab installation script
+  get_url:
+    url:  https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+    dest: ~/script.deb.sh
+
+- name: Install GitLab repository
+  command: bash ~/script.deb.sh
+
+- name: Install Gitlab CE
+  apt:
+    name:   gitlab-ce
+    state:  present
+
+- name: Ensure a locale exists
+  locale_gen:
+    name:   ru_RU.UTF-8
+    state:  present
+
+- name: reconfigure gitlab and start it with default settings
+  command:  gitlab-ctl reconfigure
+
+- name: GitLab service status
+  service:
+    name:     gitlab-runsvdir.service
+    state:    started
+    enabled:  yes
