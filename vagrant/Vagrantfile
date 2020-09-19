@@ -11,6 +11,7 @@ Vagrant.configure("2") do |config|
     config.vm.define name do |cfg|
 
       cfg.vm.box = settings['box']
+      cfg.vm.box_version = settings['box_version']
       cfg.vm.network "public_network", bridge: "enp2s0", ip: settings['ip']
 
         

@@ -5,4 +5,5 @@ gitlab:
   memory:   3000
   gui:      false
   box:      "ubuntu/xenial64"
+  box_version: "20200918.0.0"
   ip:       192.168.88.222
