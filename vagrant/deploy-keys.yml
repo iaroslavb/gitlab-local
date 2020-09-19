@@ -5,7 +5,8 @@
 
 - name: provision SSH key for ansible
   hosts: all
-  sudo: True
+  become: True
+  become_user: root
   tasks:
     - name: Create `ansible` user
       user:
